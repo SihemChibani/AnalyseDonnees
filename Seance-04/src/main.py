@@ -3,8 +3,20 @@
 import numpy as np
 import pandas as pd
 import scipy
-import scipy.stats
+import scipy.stats 
+from scipy.stats import (
+    poisson,
+    binom,
+    zipf,
+    randint,
+    norm,
+    lognorm,
+    uniform,
+    chi2,
+    pareto
+)
 import os
+import matplotlib.pyplot as plt
 
 #https://docs.scipy.org/doc/scipy/reference/stats.html
 
@@ -14,13 +26,13 @@ dist_names = ['norm', 'beta', 'gamma', 'pareto', 't', 'lognorm', 'invgamma', 'in
 print(dist_names)
 
 
-# 0. CRÉATION DU DOSSIER IMAGES SI ABSENT
+# CRÉATION DU DOSSIER IMAGES
 
 if not os.path.exists("images"):
     os.makedirs("images")
 
 
-
+# Question 1 : 
 # 1. FONCTIONS POUR CALCULER MOYENNE ET ECART-TYPE
 
 def calcul_stats(distribution, params, size=10000):
@@ -28,9 +40,9 @@ def calcul_stats(distribution, params, size=10000):
     return np.mean(data), np.std(data)
 
 
-# -----------------------------------------------------------
+
 # 2. FONCTIONS POUR SAUVER LES GRAPHES
-# -----------------------------------------------------------
+
 def save_discrete(name, data, bins=None):
     plt.figure()
     plt.hist(data, bins=bins, density=True)
@@ -59,40 +71,40 @@ def save_continuous(name, data):
     print(f"[OK] Image enregistrée : {filename}")
 
 
-# -----------------------------------------------------------
-# 3. DISTRIBUTIONS DISCRÈTES
-# -----------------------------------------------------------
 
-# Dirac
+# 3. DISTRIBUTIONS DISCRÈTES
+
+
+# La loi de Dirac
 data_dirac = np.full(10000, 3)
 save_discrete("Dirac_3", data_dirac)
 
-# Uniforme discrète
+# La loi uniforme discrète
 data_uniforme_discrete = randint.rvs(0, 10, size=10000)
 save_discrete("Uniforme_discrete_0_10", data_uniforme_discrete)
 
-# Binomiale
+# La loi binomiale
 data_binom = binom.rvs(n=20, p=0.4, size=10000)
 save_discrete("Binomiale_n20_p04", data_binom)
 
-# Poisson discrète
+# La loi de poisson discrète
 data_poisson = poisson.rvs(mu=5, size=10000)
 save_discrete("Poisson_discrete_mu5", data_poisson)
 
-# Zipf
+# La loi de Zipf-Mandelbrot
 data_zipf = zipf.rvs(a=2, size=10000)
 save_discrete("Zipf_Mandelbrot_a2", data_zipf, bins=50)
 
 
-# -----------------------------------------------------------
-# 4. DISTRIBUTIONS CONTINUES
-# -----------------------------------------------------------
 
-# Poisson continue (approx)
+# 4. DISTRIBUTIONS CONTINUES
+
+
+# La loi de Poisson continue (approx)
 data_poisson_cont = poisson.rvs(10, size=10000) + np.random.normal(0, 0.2, 10000)
 save_continuous("Poisson_continue_approx", data_poisson_cont)
 
-# Normale
+# La loi normale
 data_normale = norm.rvs(loc=0, scale=1, size=10000)
 save_continuous("Normale_0_1", data_normale)
 
@@ -100,24 +112,24 @@ save_continuous("Normale_0_1", data_normale)
 data_lognorm = lognorm.rvs(s=0.9, size=10000)
 save_continuous("Log_normale_s09", data_lognorm)
 
-# Uniforme continue
+# La loi uniforme continue
 data_uniforme = uniform.rvs(loc=0, scale=10, size=10000)
 save_continuous("Uniforme_continue_0_10", data_uniforme)
 
-# Chi-deux
+# La loi du khi-deux
 data_chi2 = np.random.chisquare(df=4, size=10000)
 save_continuous("Chi2_df4", data_chi2)
 
-# Pareto
+# La loi de Pareto
 data_pareto = pareto.rvs(b=3, size=10000)
 save_continuous("Pareto_b3", data_pareto)
 
 
-# -----------------------------------------------------------
-# 5. CALCUL DES STATISTIQUES POUR TOUTES LES DISTRIBUTIONS
-# -----------------------------------------------------------
 
-print("\n--- STATISTIQUES DES DISTRIBUTIONS ---\n")
+# Question 2 : 
+
+
+print("\n STATISTIQUES DES DISTRIBUTIONS \n")
 
 distributions = {
     "Uniforme discrète": (randint, (0, 10)),

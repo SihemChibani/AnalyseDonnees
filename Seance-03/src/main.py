@@ -16,7 +16,7 @@ import os
 with open("data/resultats-elections-presidentielles-2022-1er-tour.csv", "r", encoding="utf8") as f:
     df = pd.read_csv(f)
 
-print("\n--- Données chargées ---")
+print("\n Données chargées ")
 print(df.head())
 
 # Création du dossier images
@@ -69,7 +69,7 @@ for element in stats:
 # Question 7 : Distance interquartile et interdécile 
 
 
-print("\n--- Distances interquartile (IQR) et interdécile (IDR) ---")
+print("\n Distances interquartile (IQR) et interdécile (IDR) ")
 
 for col in colonnes_quanti:
     Q1 = df[col].quantile(0.25)
